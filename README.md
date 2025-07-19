@@ -34,7 +34,7 @@ A full-featured e-commerce website built using the MERN stack – MongoDB Atlas,
 
 ## 📁 Project Structure
 
-
+```
 mern-ecommerce/
 ├── client/ # React Frontend
 │ └── src/
@@ -49,7 +49,7 @@ mern-ecommerce/
 │ └── config/
 │
 └── README.md
-
+```
 
 ## 📦 Installation & Setup
 
