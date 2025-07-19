@@ -1,7 +1,7 @@
 ```md
 # 🛒 E-Commerce Demo Website (MERN Stack)
 
-A full-featured e-commerce website built using the **MERN stack** – **MongoDB Atlas**, **Express.js**, **React.js**, and **Node.js**. It allows users to browse products, manage a shopping cart, and securely place orders.
+A full-featured e-commerce website built using the MERN stack – MongoDB Atlas, Express.js, React.js, and Node.js. It allows users to browse products, manage a shopping cart, and securely place orders.
 
 ---
 
