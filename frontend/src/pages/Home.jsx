@@ -1,27 +1,27 @@
-import { useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import React, { useEffect } from 'react';
+import { useAuth } from '../Context/AuthContext';
 
 export default function Home() {
   const { user, setUser, setIsAuthenticated } = useAuth();
 
+  // ✅ Restore user on refresh from localStorage
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const isAuth = localStorage.getItem("isAuthenticated");
-    if (storedUser && isAuth === "true") {
+    const storedUser = localStorage.getItem('user');
+    const isAuth = localStorage.getItem('isAuthenticatedd');
+    if (storedUser && isAuth === 'true') {
       setUser(JSON.parse(storedUser));
       setIsAuthenticated(true);
     }
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white px-4">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 sm:p-8 text-center">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-indigo-600 mb-4">
-          Welcome, {user?.name || "User"}! 🎉
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-white flex items-center justify-center">
+      <div className="bg-white shadow-xl rounded-lg p-10 max-w-md w-full text-center">
+        <h1 className="text-3xl font-bold text-indigo-600 mb-4">
+          Welcome, {user?.name || 'User'}! 🎉
         </h1>
-        <p className="text-gray-700 text-sm sm:text-base leading-relaxed">
-          You are successfully logged in. Explore our features or start
-          shopping!
+        <p className="text-gray-600 mb-6">
+          You are successfully logged in. Explore our features or start shopping!
         </p>
       </div>
     </div>

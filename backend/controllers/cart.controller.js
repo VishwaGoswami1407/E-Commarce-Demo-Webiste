@@ -1,30 +1,27 @@
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const stripe = {}
-const jwt = require('jsonwebtoken');
-const {Cart} = require('../model/Cart');
-const {User} = require("../model/User");
-const {Product} = require('../model/Product');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+// const stripe = {}
+const jwt = require("jsonwebtoken");
+const { Cart } = require("../model/Cart");
+const { User } = require("../model/User");
+const { Product } = require("../model/Product");
 const sendEmail = require("../utils/userEmail");
 
-
-
-
-const cart = async(req,res)=>{
-  const {token} = req.headers;
-  const decodedtoken = jwt.verify(token,"supersecret");
-  const user = await User.findOne({email:decodedtoken.email}).populate({
-    path:'cart',
-    populate:{
-      path:'products.product',
-      model:'Product'
-    }
+const cart = async (req, res) => {
+  const { token } = req.headers;
+  const decodedtoken = jwt.verify(token, "supersecret");
+  const user = await User.findOne({ email: decodedtoken.email }).populate({
+    path: "cart",
+    populate: {
+      path: "products.product",
+      model: "Product",
+    },
   });
-  if(!user){
-   return res.status(400).json({message:"User not found"});
+  if (!user) {
+    return res.status(400).json({ message: "User not found" });
   }
 
-  res.status(200).json( {cart:user.cart});
-}
+  res.status(200).json({ cart: user.cart });
+};
 
 const addCart = async (req, res) => {
   try {
@@ -52,7 +49,9 @@ const addCart = async (req, res) => {
     }
 
     if (product.stock < quantity) {
-      return res.status(400).json({ message: "Out of Stock or insufficient quantity" });
+      return res
+        .status(400)
+        .json({ message: "Out of Stock or insufficient quantity" });
     }
 
     let cart;
@@ -101,14 +100,11 @@ const addCart = async (req, res) => {
     await product.save();
 
     res.status(200).json({ message: "Product added to cart" });
-
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-
-
 
 const updateCart = async (req, res) => {
   try {
@@ -121,8 +117,8 @@ const updateCart = async (req, res) => {
       path: "cart",
       populate: {
         path: "products.product",
-        model: "Product"
-      }
+        model: "Product",
+      },
     });
 
     // 2. Check if user or cart exists
@@ -133,7 +129,9 @@ const updateCart = async (req, res) => {
     const cart = user.cart;
 
     // 3. Find the specific product in cart
-    const item = cart.products.find(p => p.product._id.toString() === productId);
+    const item = cart.products.find(
+      (p) => p.product._id.toString() === productId
+    );
 
     if (!item) {
       return res.status(404).json({ message: "Product not found in cart" });
@@ -152,7 +150,6 @@ const updateCart = async (req, res) => {
       item.quantity += 1;
       cart.total += price;
       product.stock -= 1;
-
     } else if (action === "decrease") {
       if (item.quantity > 1) {
         item.quantity -= 1;
@@ -161,16 +158,18 @@ const updateCart = async (req, res) => {
       } else {
         // If quantity is 1, remove the product from cart
         cart.total -= price;
-        cart.products = cart.products.filter(p => p.product._id.toString() !== productId);
+        cart.products = cart.products.filter(
+          (p) => p.product._id.toString() !== productId
+        );
         product.stock += 1;
       }
-
     } else if (action === "remove") {
       // Remove the entire product from cart and restore stock
       cart.total -= price * item.quantity;
-      cart.products = cart.products.filter(p => p.product._id.toString() !== productId);
+      cart.products = cart.products.filter(
+        (p) => p.product._id.toString() !== productId
+      );
       product.stock += item.quantity;
-
     } else {
       return res.status(400).json({ message: "Invalid action" });
     }
@@ -181,78 +180,76 @@ const updateCart = async (req, res) => {
 
     res.status(200).json({
       message: "Cart updated",
-      cart
+      cart,
     });
-
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
+const payment = async (req, res) => {
+  try {
+    const { token } = req.headers;
+    const decodedToken = jwt.verify(token, "supersecret");
+    const user = await User.findOne({ email: decodedToken.email }).populate({
+      path: "cart",
+      populate: {
+        path: "products.product",
+        model: "Product",
+      },
+    });
+    if (!user || !user.cart || user.cart.products.length === 0) {
+      res.status(404).json({ message: "user or cart not found" });
+    }
 
-
-const payment = async(req,res)=>{
-  try{
-      const {token} = req.headers;
-      const decodedToken = jwt.verify(token,"supersecret");
-      const user = await User.findOne({email:decodedToken.email}).populate({
-        path:'cart',
-        populate:{
-          path:"products.product",
-          model:'Product'
-        }
-      })
-      if(!user||!user.cart||user.cart.products.length ===0){
-        res.status(404).json({message:"user or cart not found"})
-      }
-
-      //payment
-      const lineItems = user.cart.products.map((item)=>{
-          return {price_data:{
-          currency:"inr",
-          product_data:{
-            name:item.product.name,
+    //payment
+    const lineItems = user.cart.products.map((item) => {
+      return {
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: item.product.name,
           },
-          unit_amount: item.product.price*100,
+          unit_amount: item.product.price * 100,
         },
-        quantity:item.quantity
-      }})
+        quantity: item.quantity,
+      };
+    });
 
-      const curentUrl = process.env.CLIENT_URL;
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types:["card"],
-        line_items: lineItems,
-        mode:"payment",
-        success_url:`${curentUrl}/success`,
-        cancel_url:`${curentUrl}/cancel`
-      })
+    const curentUrl = process.env.CLIENT_URL;
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      success_url: `${curentUrl}/success`,
+      cancel_url: `${curentUrl}/cancel`,
+    });
 
-      //send email to user
-      await sendEmail(
-        user.email,
-        
-        user.cart.products.map((item)=>({
-          name:item.product.name,
-          price:item.product.price
-        }))
-      )
+    //send email to user
+    await sendEmail(
+      user.email,
 
-      //empty cart
-      user.cart.products=[];
-      user.cart.total = 0;
-      await user.cart.save();
-      await user.save();
-      res.status(200).json({
-        message:"get the payment url",
-        url:session.url
+      user.cart.products.map((item) => ({
+        name: item.product.name,
+        price: item.product.price,
+      }))
+    );
 
-      })
-  }catch (error) {
+    //empty cart
+    user.cart.products = [];
+    user.cart.total = 0;
+    await user.cart.save();
+    await user.save();
+    res.status(200).json({
+      message: "get the payment url",
+      url: session.url,
+    });
+  } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error" });
   }
-}
+};
 
 // ----- NEW: directly set a product quantity in the cart -----
 const updateQuantity = async (req, res) => {
@@ -261,7 +258,9 @@ const updateQuantity = async (req, res) => {
     const { token } = req.headers;
 
     if (!productId || typeof quantity !== "number") {
-      return res.status(400).json({ message: "productId and quantity are required" });
+      return res
+        .status(400)
+        .json({ message: "productId and quantity are required" });
     }
 
     if (quantity < 0) {
@@ -280,7 +279,9 @@ const updateQuantity = async (req, res) => {
     }
 
     const cart = user.cart;
-    const item = cart.products.find((p) => p.product._id.toString() === productId);
+    const item = cart.products.find(
+      (p) => p.product._id.toString() === productId
+    );
 
     if (!item) {
       return res.status(404).json({ message: "Product not found in cart" });
@@ -308,7 +309,9 @@ const updateQuantity = async (req, res) => {
 
     // If quantity becomes 0, remove item
     if (item.quantity === 0) {
-      cart.products = cart.products.filter((p) => p.product._id.toString() !== productId);
+      cart.products = cart.products.filter(
+        (p) => p.product._id.toString() !== productId
+      );
     }
 
     await product.save();
@@ -321,4 +324,4 @@ const updateQuantity = async (req, res) => {
   }
 };
 
-module.exports = {cart,addCart,updateCart,updateQuantity,payment}
+module.exports = { cart, addCart, updateCart, updateQuantity, payment };
