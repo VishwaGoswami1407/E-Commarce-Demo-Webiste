@@ -125,7 +125,7 @@ npm run dev
 | ----------------------------------- | --------------------------------- |
 | ![Orders](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142242.png) | ![Admin](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/image.png) |
 
-> 📝 You can replace the `./screenshots/*.png` with your actual screenshot file names or links.
+
 
 ---
 
@@ -136,26 +136,7 @@ npm run dev
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
 
----
 
-## 📃 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
 
 ```
 
-### ✅ To Finalize:
-
-1. Replace `https://github.com/yourusername/mern-ecommerce.git` with your actual GitHub repo.
-2. Put all screenshots in a `screenshots/` folder or use public image URLs.
-3. Make sure `.env` is **not pushed to GitHub** (add it to `.gitignore`).
-
-Let me know if you want me to:
-
-- Automatically generate optimized screenshots from your video
-- Include a live demo GIF or deploy guide (e.g., with Render/Netlify/Vercel)
-
-I'll update it accordingly.
-```
