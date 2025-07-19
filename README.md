@@ -93,7 +93,7 @@ npm install
 npm run dev
 ```
 
-> Frontend runs at `http://localhost:5173` and Backend at `http://localhost:5000`
+> Frontend runs at `http://localhost:5173` and Backend at `http://localhost:3000`
 
 ---
 
@@ -127,7 +127,7 @@ npm run dev
 
 
 
----
+
 
 ## 🙌 Acknowledgements
 
@@ -137,6 +137,4 @@ npm run dev
 - [Tailwind CSS](https://tailwindcss.com/)
 
 
-
-```
 
