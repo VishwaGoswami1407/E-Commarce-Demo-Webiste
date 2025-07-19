@@ -23,14 +23,14 @@ A full-featured e-commerce website built using the **MERN stack** – **MongoDB 
 
 | Technology             | Role                              |
 | ---------------------- | --------------------------------- |
-| **MongoDB Atlas**      | Cloud-hosted NoSQL database       |
-| **Express.js**         | Backend web framework for Node.js |
-| **React.js**           | Frontend library for dynamic UIs  |
-| **Node.js**            | JavaScript runtime environment    |
-| **Tailwind CSS / CSS** | Styling and responsive layout     |
-| **JWT**                | Secure user authentication        |
-| **Vite**               | Fast frontend tooling for React   |
-| **Mongoose**           | MongoDB ODM for schema modeling   |
+|   MongoDB Atlas        | Cloud-hosted NoSQL database       |
+|   Express.js           | Backend web framework for Node.js |
+|   React.js             | Frontend library for dynamic UIs  |
+|   Node.js              | JavaScript runtime environment    |
+|   Tailwind CSS / CSS   | Styling and responsive layout     |
+|   JWT                  | Secure user authentication        |
+|   Vite                 | Fast frontend tooling for React   |
+|   Mongoose             | MongoDB ODM for schema modeling   |
 
 ---
 
@@ -68,7 +68,7 @@ cd mern-ecommerce
 ### 2. Backend Setup (Server)
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
@@ -88,7 +88,7 @@ npm run dev
 ### 3. Frontend Setup (Client)
 
 ```bash
-cd client
+cd frontend
 npm install
 npm run dev
 ```
@@ -115,15 +115,15 @@ npm run dev
 
 | Home Page                       | Product Details Page                  |
 | ------------------------------- | ------------------------------------- |
-| ![Home](./screenshots/home.png) | ![Product](./screenshots/product.png) |
+| ![Home](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142027.png) | ![Product](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142048.png) |
 
 | Cart Page                       | Checkout Page                           |
 | ------------------------------- | --------------------------------------- |
-| ![Cart](./screenshots/cart.png) | ![Checkout](./screenshots/checkout.png) |
+| ![Cart](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142121.png, ) | ![Checkout](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142213.png) |
 
 | Order History                       | Admin Dashboard                   |
 | ----------------------------------- | --------------------------------- |
-| ![Orders](./screenshots/orders.png) | ![Admin](./screenshots/admin.png) |
+| ![Orders](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142242.png) | ![Admin](./screenshots/admin.png) |
 
 > 📝 You can replace the `./screenshots/*.png` with your actual screenshot file names or links.
 
