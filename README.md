@@ -119,11 +119,11 @@ npm run dev
 
 | Cart Page                       | Checkout Page                           |
 | ------------------------------- | --------------------------------------- |
-| ![Cart](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142121.png, ) | ![Checkout](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142213.png) |
+| ![Cart](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142121.png) | ![Checkout](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142213.png) |
 
 | Order History                       | Admin Dashboard                   |
 | ----------------------------------- | --------------------------------- |
-| ![Orders](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142242.png) | ![Admin](./screenshots/admin.png) |
+| ![Orders](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/Screenshot%202025-07-19%20142242.png) | ![Admin](https://github.com/VishwaGoswami1407/E-Commarce-Demo-Webiste/blob/main/image.png) |
 
 > 📝 You can replace the `./screenshots/*.png` with your actual screenshot file names or links.
 
